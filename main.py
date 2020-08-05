@@ -7,19 +7,41 @@ Written in Python 3.8.5
 TO DO:
  - Validity checker (is Soduko grid and values valid)
  - Configure for every symmetrical Sudoku grid with dimension n^2
+ - Have a Sudoku generator
+ - Make a 9x9 Sudoku Input Reader
 """
 
 import math
 
-grid = [[5, 3, 0, 0, 7, 0, 0, 0, 0],
-        [6, 0, 0, 1, 9, 5, 0, 0, 0],
-        [0, 9, 8, 0, 0, 0, 0, 6, 0],
-        [8, 0, 0, 0, 6, 0, 0, 0, 3],
-        [4, 0, 0, 8, 0, 3, 0, 0, 1],
-        [7, 0, 0, 0, 2, 0, 0, 0, 6],
-        [0, 6, 0, 0, 0, 0, 2, 8, 0],
-        [0, 0, 0, 4, 0, 9, 0, 0, 5],
-        [0, 0, 0, 0, 8, 0, 0, 7, 9]]
+grid = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+grid2 = [[5, 3, 0, 0, 7, 0, 0, 0, 0],
+         [6, 0, 0, 1, 9, 5, 0, 0, 0],
+         [0, 9, 8, 0, 0, 0, 0, 6, 0],
+         [8, 0, 0, 0, 6, 0, 0, 0, 3],
+         [4, 0, 0, 8, 0, 3, 0, 0, 1],
+         [7, 0, 0, 0, 2, 0, 0, 0, 6],
+         [0, 6, 0, 0, 0, 0, 2, 8, 0],
+         [0, 0, 0, 4, 0, 9, 0, 0, 5],
+         [0, 0, 0, 0, 8, 0, 0, 7, 9]]
+
+grid3 = [[1, 2, 3, 4, 5, 6, 7, 8, 9],
+         [4, 5, 6, 7, 8, 9, 1, 2, 3],
+         [7, 8, 9, 1, 2, 3, 4, 5, 6],
+         [2, 1, 4, 3, 6, 5, 8, 9, 7],
+         [3, 6, 5, 8, 9, 7, 2, 1, 4],
+         [8, 9, 7, 2, 1, 4, 3, 6, 5],
+         [5, 3, 1, 6, 4, 2, 9, 7, 8],
+         [6, 4, 2, 9, 7, 8, 5, 3, 1],
+         [9, 7, 8, 5, 3, 1, 6, 4, 2]]
 
 
 def pretty_print(grid):
@@ -80,7 +102,7 @@ def possible(x, y, n):
     return True
 
 
-def possibl_alternative(x, y, n):
+def possible_alternative(x, y, n):
     """Alternative function to check if its possible to place (int) n at position [x,y] in matrix or grid. n is allowed to be place when 3 criteria are met. sqrt_n denotes n of n^2. Version from the youtube video
     1: n doesnt appear in row
     2: n doesnt appear in column
@@ -108,7 +130,7 @@ def possibl_alternative(x, y, n):
 
 
 def solve():
-    """" Rescursive approach which uses backtracking to check if value n is a possible solution for index [x,y]. If so, place [x,y]=n and call solve() to check for next empty spot, i.e. [x,y]=0. If possible() reached numbers over 9 then no solution was found, grid[x,y] is reset to 0 and the path in the call tree is left (return)  
+    """" Rescursive approach which uses backtracking to check if value n is a possible solution for index [x,y]. If so, place [x,y]=n and call solve() to check for next empty spot, i.e. [x,y]=0. If possible() reached numbers over 9 then no solution was found, grid[x,y] is reset to 0 and the path in the call stack/tree is left (return)  
     """
     global grid
     for x in range(9):
@@ -121,6 +143,7 @@ def solve():
                         grid[x][y] = 0
                 return
     pretty_print(grid)
+    input("Next Solution?")
 
 
 def main():
