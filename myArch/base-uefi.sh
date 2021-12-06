@@ -13,7 +13,7 @@ echo "127.0.1.1 arch.localdomain FILLMEIN" >> /etc/hosts
 echo root:password | chpasswd
 
 
-pacman -S --noconfirm efibootmgr dialog iwd reflector base-devel linux-headers avahi nfs-utils inetutils dnsutils zsh-completions openssh acpi acpi_call tlp terminus-font
+pacman -S --noconfirm efibootmgr dialog iwd reflector base-devel linux-headers avahi nfs-utils inetutils dnsutils openssh acpi acpi_call tlp terminus-font zsh zsh-completions zsh-theme-powerlevel10k-git
 
 systemctl enable sshd
 systemctl enable avahi-daemon
@@ -25,6 +25,7 @@ useradd -m r
 echo r:password | chpasswd
 
 echo "r ALL=(ALL) ALL" >> /etc/sudoers.d/r
+echo "Think about oh-my-zsh-git and chsh -s /usr/bin/zsh"
 printf "\e[1;32mDone! Type exit, umount -a and reboot.\e[0m"
 # chmod +x base-uefi.sh
 
