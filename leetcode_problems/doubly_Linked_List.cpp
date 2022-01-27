@@ -9,26 +9,29 @@ struct Node
     Node *prev = NULL;
 };
 
-Node *head = new Node();
-Node *tail = new Node();
+Node *lPtr = new Node();
+Node *rPtr = new Node();
 
 void traverse(Node *ptr);
 void traverseExtended(Node *ptr);
-int search(Node *ptr, int t);
+Node *search(Node *ptr, int t);
 void append(Node *ptr, int t);
+void insert(Node *ptr, int t, int x);
 
 int main()
 {
     Node n1;
     n1.val = 1;
-    head = &n1;
-    n1.prev = head;
+    lPtr = &n1;
+    n1.prev = lPtr;
 
-    append(head, 2);
-    append(head, 3);
-    append(head, 4);
-    traverse(head);
-    cout << search(head, 22);
+    append(lPtr, 2);
+    append(lPtr, 3);
+    append(lPtr, 4);
+    traverse(lPtr);
+    search(lPtr, 2);
+    insert(lPtr, 3, 5);
+    traverse(lPtr);
     return 0;
 }
 
@@ -65,21 +68,25 @@ void append(Node *ptr, int t)
     temp->prev = ptr;
 }
 
-void insert(Node *ptr, int t)
+void insert(Node *ptr, int t, int x)
 {
+    ptr = search(ptr, t);
+    Node *temp = new Node();
+    temp->next = ptr->next;
+    ptr->next = temp;
+    temp->prev = ptr;
+    temp->val = x;
 }
 
-int search(Node *ptr, int t)
+Node *search(Node *ptr, int t)
 {
-    int cnt = 0;
     while (ptr->next != NULL)
     {
         if (t == ptr->val)
         {
-            return cnt;
+            return ptr;
         }
-        ++cnt;
         ptr = ptr->next;
     }
-    return -1;
+    return NULL;
 }
