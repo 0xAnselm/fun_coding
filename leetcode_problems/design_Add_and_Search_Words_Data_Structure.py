@@ -10,10 +10,10 @@ class WordDictionary:
         self.dot = False
 
     def addWord(self, word: str) -> None:
-        if word not in self.l:
-            self.l.append(word)
         if len(word) == 1:
             self.dot = True
+        if word not in self.l:
+            self.l.append(word)
 
     def search(self, word: str) -> bool:
         if word == ".":
