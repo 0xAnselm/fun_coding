@@ -15,6 +15,10 @@ RHS = [480, 160, 1190]
 vertices = [(0, 0), (0, 32), (12, 28), (26, 14), (34, 0)]
 
 
+def objectiveVector(x1, x2):
+    return 13*x1+23*x2
+
+
 def buildb():
     b = np.array([RHS]).T
     return b
@@ -57,9 +61,9 @@ def calcLGS(A, b, pV):
         A_B = A[:, ind]
         x = np.linalg.solve(A_B, b)
         if pV[i][0] == '0':
-            x[0] = 0 
+            x[0] = 0
         if pV[i][1] == '0':
-            x[1] = 0 
+            x[1] = 0
         mySolutions.append(x)
         # print("x1:", x[0], "x2:", x[1])
     return mySolutions
@@ -74,7 +78,12 @@ def checkFeasibleSolution(sol):
         x1 = s[0][0]
         x2 = s[1][0]
         p = Point(x1, x2)
-        print(wkt.dumps(p, rounding_precision=0).rjust(15), "ist im Polytope:", poly.touches(p))
+        if poly.touches(p):
+            print(wkt.dumps(p, rounding_precision=0).rjust(15), "is in Polytope:", str(
+                poly.touches(p)).ljust(6), "which yields", round(objectiveVector(x1, x2), 2))
+        else:
+            print(wkt.dumps(p, rounding_precision=0).rjust(15),
+                  "is in Polytope:", str(poly.touches(p)).ljust(6))
 
 
 def main():
