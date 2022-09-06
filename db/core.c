@@ -1,46 +1,10 @@
+/* Core Functions, i.e. main*/
 #include <core.h>
-
-InputBuffer *new_input_buffer()
-{
-    InputBuffer *input_buffer = (InputBuffer *)malloc(sizeof(InputBuffer));
-    input_buffer->buffer = NULL;
-    input_buffer->buffer_length = 0;
-    input_buffer->input_length = 0;
-
-    return input_buffer;
-}
-
-void print_prompt()
-{
-    printf("db > ");
-}
-
-void read_input(InputBuffer *input_buffer)
-{
-    // getline returns no chars read + delim char
-    ssize_t bytes_read = getline(&(input_buffer->buffer), &(input_buffer->buffer_length), stdin);
-    
-    if (bytes_read <= 0)
-    {
-        printf("Error reading input. Exiting\n");
-        exit(EXIT_FAILURE);
-    }
-    // Ignore trailing newline char '\n'
-    input_buffer->input_length = bytes_read - 1;
-    input_buffer->buffer[bytes_read - 1] = 0;
-    printf("[DEBUG] char: '%s', buffer_length: %d, input_length: %d\n", input_buffer->buffer, input_buffer->buffer_length, input_buffer->input_length);
-}
-
-void close_input_buffer(InputBuffer *input_buffer)
-{
-    free(input_buffer->buffer);
-    free(input_buffer);
-}
 
 int main(int argc, char *argv[])
 {
     puts("Welcome to superMongoDB");
-    
+
     // new input buffer for repl
     InputBuffer *input_buffer = new_input_buffer();
     printf("Buffer size. %d\n", input_buffer->buffer_length);
@@ -48,18 +12,28 @@ int main(int argc, char *argv[])
     {
         print_prompt();
         read_input(input_buffer);
-        if (strcmp(input_buffer->buffer, ".exit") == 0)
+        if (input_buffer->buffer[0] == '.')
         {
-            if (input_buffer->buffer[0] == '.') {
-                switch (do_meta_command(input_buffer))
-                {
-                case (META_COMMAND_SUCCESS):
-                    continue;
-                case (META_COMMAND_UNRECOGNIZED_COMMAND):
-                    printf("Unrecognized command '%s'\n", input_buffer->buffer);
-                    continue;
-                }
+            switch (do_meta_command(input_buffer))
+            {
+            case (META_COMMAND_SUCCESS):
+                continue;
+            case (META_COMMAND_UNRECOGNIZED_COMMAND):
+                printf("Unrecognized command '%s'\n", input_buffer->buffer);
+                continue;
             }
         }
+
+        Statement statement;
+        switch (prepare_statement(input_buffer, &statement)) {
+            case (PREPARE_SUCCESS):
+                break;
+            case (PREPARE_UNRECOGNIZRED_STATEMENT):
+                printf("Unrecognized keyword at start of '%s'\n", input_buffer->buffer);
+                continue;
+        }
+
+        execute_statement(&statement);
+        puts("Executed");
     }
 }

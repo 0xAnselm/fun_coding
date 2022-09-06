@@ -7,10 +7,10 @@ LDIR =.
 
 LIBS=-lm -lpthread
 
-_DEPS = core.h
+_DEPS = core.h structs.h enums.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = core.o compiler.o
+_OBJ = core.o compiler.o buffer.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
