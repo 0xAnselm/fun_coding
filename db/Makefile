@@ -7,17 +7,17 @@ LDIR =.
 
 LIBS=-lm -lpthread
 
-_DEPS = myrepl.h
+_DEPS = core.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = myrepl.o 
+_OBJ = core.o compiler.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
 $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-myrepl: $(OBJ)
+core: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean

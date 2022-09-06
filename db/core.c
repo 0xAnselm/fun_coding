@@ -1,11 +1,4 @@
-#include <myrepl.h>
-
-typedef struct
-{
-    char *buffer;
-    size_t buffer_length; // return size in bytes
-    ssize_t input_length; // return size in bytes or error val
-} InputBuffer;
+#include <core.h>
 
 InputBuffer *new_input_buffer()
 {
@@ -35,7 +28,7 @@ void read_input(InputBuffer *input_buffer)
     // Ignore trailing newline char '\n'
     input_buffer->input_length = bytes_read - 1;
     input_buffer->buffer[bytes_read - 1] = 0;
-    printf("[DEBUG] char: %s, buffer_length: %d, input_length: %d\n", input_buffer->buffer, input_buffer->buffer_length, input_buffer->input_length);
+    printf("[DEBUG] char: '%s', buffer_length: %d, input_length: %d\n", input_buffer->buffer, input_buffer->buffer_length, input_buffer->input_length);
 }
 
 void close_input_buffer(InputBuffer *input_buffer)
@@ -47,7 +40,6 @@ void close_input_buffer(InputBuffer *input_buffer)
 int main(int argc, char *argv[])
 {
     puts("Welcome to superMongoDB");
-    printf("Locale is: %s\n", setlocale(LC_ALL, NULL));
     
     // new input buffer for repl
     InputBuffer *input_buffer = new_input_buffer();
@@ -58,12 +50,16 @@ int main(int argc, char *argv[])
         read_input(input_buffer);
         if (strcmp(input_buffer->buffer, ".exit") == 0)
         {
-            close_input_buffer(input_buffer);
-            exit(EXIT_SUCCESS);
-        }
-        else
-        {
-            printf("Unrecognized command '%s'.\n", input_buffer->buffer);
+            if (input_buffer->buffer[0] == '.') {
+                switch (do_meta_command(input_buffer))
+                {
+                case (META_COMMAND_SUCCESS):
+                    continue;
+                case (META_COMMAND_UNRECOGNIZED_COMMAND):
+                    printf("Unrecognized command '%s'\n", input_buffer->buffer);
+                    continue;
+                }
+            }
         }
     }
 }
