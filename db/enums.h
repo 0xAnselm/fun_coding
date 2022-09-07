@@ -11,7 +11,7 @@ typedef enum
 typedef enum
 {
     PREPARE_SUCCESS,
-    PREPARE_FAILURE,
+    PREPARE_SYNTAX_ERROR,
     PREPARE_UNRECOGNIZRED_STATEMENT
 } PrepareResult;
 
@@ -20,5 +20,11 @@ typedef enum
     STATEMENT_INSERT,
     STATEMENT_SELECT
 } StatementType;
+
+typedef enum
+{
+    EXECUTE_SUCCESS,
+    EXECUTE_TABLE_FULL
+} ExecuteResult;
 
 #endif
