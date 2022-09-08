@@ -1,8 +1,8 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
-#include <enums.h>
-
+#include "core.h"
+#include "enums.h"
 typedef struct
 {
     char *buffer;
@@ -15,8 +15,8 @@ typedef struct
 typedef struct
 {
     uint32_t id;
-    char username[COLUMN_USERNAME_SIZE];
-    char email[COLUMN_EMAIL_SIZE];
+    char username[COLUMN_USERNAME_SIZE+1];
+    char email[COLUMN_EMAIL_SIZE+1];
 } Row;
 
 typedef struct

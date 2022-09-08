@@ -2,6 +2,7 @@
     "files.associations": {
         "stdlib.h": "c",
         "myrepl.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "core.h": "c"
     }
 }

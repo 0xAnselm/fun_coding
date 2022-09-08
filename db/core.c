@@ -1,13 +1,24 @@
 /* Core Functions, i.e. main*/
-#include <core.h>
+#include "core.h"
 
+#ifndef TESTING
 int main(int argc, char *argv[])
 {
-    puts("Welcome to superMongoDB");
-    Table* table = new_table();
+    for (int i = 0; i < argc; ++i)
+    {
+        printf("%d %s\n", argc, argv[i]);
+    }
+    return run(argc, argv);
+}
+#endif
+
+int run(int argc, char *argv[])
+{
+    puts("Welcome to oeDB");
+    Table *table = new_table();
     // new input buffer for repl
     InputBuffer *input_buffer = new_input_buffer();
-    printf("Buffer size. %d\n", input_buffer->buffer_length);
+    printf("[DEBUG] Buffer size. %d\n", input_buffer->buffer_length);
     while (true)
     {
         print_prompt();
@@ -20,24 +31,26 @@ int main(int argc, char *argv[])
         }
 
         Statement statement;
-        switch (prepare_statement(input_buffer, &statement)) {
-            case (PREPARE_SUCCESS):
-                break;
-            case (PREPARE_SYNTAX_ERROR):
-                printf("Syntax error. Could not parse statement\n");
-                continue;
-            case (PREPARE_UNRECOGNIZRED_STATEMENT):
-                printf("Unrecognized keyword at start of '%s'\n", input_buffer->buffer);
-                continue;
+        switch (prepare_statement(input_buffer, &statement))
+        {
+        case (PREPARE_SUCCESS):
+            break;
+        case (PREPARE_SYNTAX_ERROR):
+            printf("Syntax error. Could not parse statement\n");
+            continue;
+        case (PREPARE_UNRECOGNIZRED_STATEMENT):
+            printf("Unrecognized keyword at start of '%s'\n", input_buffer->buffer);
+            continue;
         }
 
-        switch (execute_statement(&statement, table)) {
-            case (EXECUTE_SUCCESS):
-                printf("Executed\n");
-                break;
-            case (EXECUTE_TABLE_FULL):
-                printf("Error: Table full\n");
-                break;
-        } 
+        switch (execute_statement(&statement, table))
+        {
+        case (EXECUTE_SUCCESS):
+            printf("Executed\n");
+            break;
+        case (EXECUTE_TABLE_FULL):
+            printf("Error: Table full\n");
+            break;
+        }
     }
 }

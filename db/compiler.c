@@ -71,9 +71,6 @@ ExecuteResult execute_insert(Statement *statement, Table *table)
 
     Row *row_to_insert = &(statement->row_to_insert);
 
-    printf("[DEBUG] Statement: %s\n", statement->row_to_insert.username);
-    printf("[DEBUG] Row to insert: %s\n", row_to_insert->username);
-    
     serialize_row(row_to_insert, row_slot(table, table->num_rows));
     table->num_rows += 1;
 
