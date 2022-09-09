@@ -26,7 +26,9 @@ int run(int argc, char *argv[])
         if (input_buffer->buffer[0] == '.')
         {
             // Starts with '.'? -> meta_command -> switch base on do_meta_command
-            meta_command(input_buffer, table);
+            char* buffer = (char *)malloc(sizeof(char) * 1024);
+            meta_command(input_buffer, table, buffer);
+            free(buffer);
             continue;
         }
 
@@ -53,4 +55,5 @@ int run(int argc, char *argv[])
             break;
         }
     }
+    return 0;
 }

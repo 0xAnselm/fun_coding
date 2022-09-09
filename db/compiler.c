@@ -1,14 +1,15 @@
 #include <core.h>
 
-void meta_command(InputBuffer *input_buffer, Table *table)
+char *meta_command(InputBuffer *input_buffer, Table *table, char *buffer)
 {
     switch (do_meta_command(input_buffer, table))
     {
     case (META_COMMAND_SUCCESS):
-        return;
+        return buffer;
     case (META_COMMAND_UNRECOGNIZED_COMMAND):
-        printf("Unrecognized command '%s'\n", input_buffer->buffer);
-        return;
+        snprintf(buffer, sizeof(buffer) * 1024, "Unrecognized command '%s'\n", input_buffer->buffer);
+        puts(buffer);
+        return buffer;
     }
 }
 
@@ -82,7 +83,9 @@ ExecuteResult execute_select(Statement *statement, Table *table)
     for (uint32_t i = 0; i < table->num_rows; ++i)
     {
         deserialize_row(row_slot(table, i), &row);
-        print_row(&row);
+        char *buffer = (char *)malloc(sizeof(char) * 1024);
+        print_row(&row, buffer);
+        free(buffer);
     }
 
     return EXECUTE_SUCCESS;

@@ -63,9 +63,9 @@ void *row_slot(Table *table, uint32_t row_num)
     return page + byte_offset;
 }
 
-char *print_row(Row *row)
+char *print_row(Row *row, char* buffer)
 {
-    char* buffer = (char *)malloc(sizeof(char) * 1024);
+    // char* buffer = (char *)malloc(sizeof(char) * 1024);
     snprintf(buffer, sizeof(buffer)*1024, "(%d, %s, %s)", row->id, row->username, row->email);
     #ifndef TESTING
         puts(buffer);
