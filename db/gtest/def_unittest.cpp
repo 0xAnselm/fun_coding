@@ -30,7 +30,7 @@ namespace
         std::string i1 = meta_command(input_buffer, table, buffer);
         EXPECT_EQ(s1, i1);
         input_buffer->buffer = NULL;
-
+        
         std::string s2 = "Unrecognized command '.'\n";
         input_buffer->buffer = strdup(".");
         std::string i2 = meta_command(input_buffer, table, buffer);
