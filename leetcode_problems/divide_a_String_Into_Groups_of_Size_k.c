@@ -7,36 +7,41 @@
  */
 char **divideString(char *s, int k, char fill, int *returnSize)
 {
-    printf("s:%s, k:%d, fill:%c, ret_size:%d\n", s, k, fill, *returnSize);
-    size_t len = strlen(s);
+    int len = strlen(s);
     int div = len / k;
     int rem = fmod(len, k);
     if (rem > 0)
     {
         ++div;
     }
-    printf("len: %ld, div: %d, k: %d, rem: %d\n", len, div, k, rem);
     char **res = (char **)malloc(sizeof(char *) * div);
     for (int i = 0; i < div; ++i)
     {
-        char *sub = (char *)malloc(sizeof(char) * (k));
+        res[i] = (char *)malloc(sizeof(char) * (k+1));
         for (int j = 0; j < k; ++j)
         {
-            sub[j] = s[i*k+j];
+            if ((i * k) + j < len)
+            {
+                res[i][j] = s[i * k + j];
+            }
+            else
+            {
+                res[i][j] = fill;
+            }
         }
-        printf("sub: %s\n", sub);
-        res[i] = sub;
-        printf("%d: ret: %s, add: %p\n", i, res[i], &res[i]);
+        res[i][k] = '\0';
+        // printf("%d: ret: %s, add: %p\n", i, res[i], &res[i]);
     }
+    *returnSize = div;
     return res;
 }
 
 int main()
 {
     char s[] = "abcdefghi";
-    int k = 5;
-    char fill = 'x';
-    char **r = divideString(s, k, fill, &k);
-    free(r);
+    int k = 2;
+    char fill[] = "x";
+    char **res = divideString(s, k, fill[0], &k);
+    free(res);
     return 0;
 }
