@@ -1,11 +1,10 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 
 double findMedianSortedArrays(int *nums1, int nums1Size, int *nums2, int nums2Size);
-int *merge(int *nums1, int nums1Size, int *nums2, int nums2Size);
 void printArray(int *nums, int numsSize);
-int *getMedianIdx(int result_len);
 
 double findMedianSortedArrays(int *nums1, int nums1Size, int *nums2, int nums2Size)
 {
@@ -42,26 +41,30 @@ double findMedianSortedArrays(int *nums1, int nums1Size, int *nums2, int nums2Si
         }
         ++i;
     }
-    printArray(result, result_len);
-    if (result_len % 2)
+    // printArray(result, result_len);
+    if (result_len % 2 == 0)
     {
-        double ret_val = (result[result_len / 2] + result[(result_len / 2) + 1]);
-        printf("1. Ret vals: %d %d\n", result[(int)result_len / 2], result[(int)(result_len / 2) + 1]);
+        double val1 = result[(int)(result_len / 2) - 1];
+        double val2 = result[(int)(result_len / 2)];
+        double ret_val = (val1 + val2)/2;
+        // printf("1. Ret vals: %f %f \t Median %f\n", val1, val2, ret_val);
         return ret_val;
     }
     else
     {
         double ret_val = result[(int)(result_len / 2)];
-        printf("2. Ret vals: %d\n", result[(int)result_len / 2]);
+        // printf("2. Ret vals: %f\n", ret_val);
         return ret_val;
     }
-    return -1;
+    return EXIT_FAILURE;
 }
 
 int main(void)
 {
-    int nums1[] = {1, 3, 9, 11};
-    int nums2[] = {2, 7};
+    // int nums1[] = {};
+    // int nums2[] = {2,3,4,5,6};
+    int nums1[] = {0,0,0,0,0};
+    int nums2[] = {-1,0,0,0,0,0,1};
     double a = findMedianSortedArrays(nums1, (int)sizeof(nums1) / sizeof(int), nums2, (int)sizeof(nums2) / sizeof(int));
     printf("Median: %f\nLen Array: %d\n", a, (int)((sizeof(nums1) + sizeof(nums2)) / sizeof(int)));
     return 0;
@@ -76,15 +79,3 @@ void printArray(int *nums, int numsSize)
     }
     printf("\n");
 }
-
-// int* getMedianIdx(int result_len) {
-//     if (result_len % 2 == 0) {
-//         int ret[2] = {result_len / 2, (result_len / 2) + 1};
-//         return ret;
-//     }
-//     else {
-//         int* ret2;
-//         *ret2 = (result_len / 2);
-//         return ret2;
-//     }
-// }
