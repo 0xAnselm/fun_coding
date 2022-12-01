@@ -31,7 +31,6 @@ int lengthOfLongestSubstring(char * s){
             j++;
             l_max++;
         }
-        // printf("l_max: %d\n\n", l_max);
         if (l_max > g_max) {
             g_max = l_max;
         }
@@ -41,6 +40,7 @@ int lengthOfLongestSubstring(char * s){
 }
 
 int main(void) {
+    // gcc -Wall -Wextra -g longest_Substring_Without_Repeating_Characters.c -o test; ./test
     char s[] = "pwwkew";
     printf("Max substring: %d\n", lengthOfLongestSubstring(s));
     return 0;
