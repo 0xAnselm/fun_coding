@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-int uniqueInSubstring(char* sbs, char j, int r) {
+int uniqueInSubstring(char* sbs, char c, int j) {
     int i = 0;
-    while (i < r) {
-        if (sbs[i] != j) {
+    while (i < j) {
+        if (sbs[i] != c) {
             i++;
         } else {
             return 0;
@@ -41,7 +41,7 @@ int lengthOfLongestSubstring(char * s){
 }
 
 int main(void) {
-    char s[] = "pwwkey";
+    char s[] = "pwwkew";
     printf("Max substring: %d\n", lengthOfLongestSubstring(s));
     return 0;
 }
