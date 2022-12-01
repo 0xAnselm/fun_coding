@@ -9,7 +9,6 @@ int uniqueInSubstring(char* sbs, char j, int r) {
             return 0;
         }
     }
-    printf("\n");
     return i;
 }
 
@@ -21,10 +20,15 @@ int lengthOfLongestSubstring(char * s){
     }
     while (s[i] != '\0') {
         int r = i+1;
+        int j = 1;
         int l_max = 1;
-        // Here we need to search our current substring from s[i..j-1] if s[j] is present
-        while(s[r] != '\0' && uniqueInSubstring(&s[i], s[r], r)) {
+        /* Here we need to search our current substring from s[i..j-1] if s[j] is present:
+        If yes leave current local longest substring and inc i
+        If not inc local longest substring length l_max
+        */
+        while(s[r] != '\0' && uniqueInSubstring(&s[i], s[r], j)) {
             r++;
+            j++;
             l_max++;
         }
         // printf("l_max: %d\n\n", l_max);
@@ -37,7 +41,7 @@ int lengthOfLongestSubstring(char * s){
 }
 
 int main(void) {
-    char s[] = "pwwkew";
+    char s[] = "pwwkey";
     printf("Max substring: %d\n", lengthOfLongestSubstring(s));
     return 0;
 }
