@@ -56,7 +56,15 @@
     "streambuf": "cpp",
     "thread": "cpp",
     "cinttypes": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "list": "cpp",
+    "charconv": "cpp",
+    "condition_variable": "cpp",
+    "mutex": "cpp",
+    "ctype.h": "c",
+    "stdlib.h": "c",
+    "stdio.h": "c",
+    "math.h": "c"
   },
   "C_Cpp.errorSquiggles": "Enabled",
   "workbench.colorCustomizations": {
