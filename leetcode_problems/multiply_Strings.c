@@ -50,7 +50,7 @@ char* multiply(char* num1, char* num2) {
             // printf("n:%d m:%d v:%d\n", n, m, val);
             // printA(result, resultSize);
         }
-        result[b_i] += carry;
+        result[a_i + b_i - 1] += carry;
     }
     printA(result, resultSize);
     return convertArray(result, resultSize, 0);
@@ -58,7 +58,8 @@ char* multiply(char* num1, char* num2) {
 
 int main() {
     char* num1 = "999";
-    char* num2 = "999";
+    char* num2 = "999";  // Expected: "998001"
+
     multiply(num1, num2);
     // printA(result, (int)(strlen(num1) + strlen(num2)));
     return 0;
